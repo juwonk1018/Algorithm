@@ -17,7 +17,7 @@ for i in range(int(start), int(end)+1):
         print(i)
         
         
-#소수를 구하기 위해서는 제곱근까지만 계산해도 되며, overhead가 큰 경우에는
-#1부터 N까지의 수를 직접 나눠서 구하는 것이 아닌 '에라토스테네스의 체'를 이용해
-#Time complexity를 줄임.
+# 소수를 구하기 위해서는 제곱근까지만 계산해도 되며, overhead가 큰 경우에는
+# 1부터 N까지의 수를 직접 나눠서 구하는 것이 아닌 '에라토스테네스의 체'를 이용해
+# Time complexity를 줄임.
         
