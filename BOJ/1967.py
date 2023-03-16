@@ -1,43 +1,45 @@
+# 1) 부모 노드들로부터 거리를 모두 측정하여 부모가 없는 노드(루트노드) 부터의 거리를 서로 빼기
+# 2) leaf node가 아닌 노드들의 자식들을 모두 구해 거리의 합을 구하기 => 1의 자식과 3의 자식이 겹칠수도 있어서 안됨..
+
+# SOL) DFS를 통해 어떤 점에서 가장 먼 점을 구하고 그 점에서 가장 먼 점을 구하면 지름.... => 나중에 다시 보기
 import sys
 from collections import deque
-from itertools import combinations
 input = sys.stdin.readline
-
 n = int(input())
-tree = [[] for _ in range(n+1)]
-totalSum = [0 for _ in range(n+1)]
-for _ in range(n-1):
-    parent, child, weight = map(int, input().split())
-    totalSum[child] = totalSum[parent] + weight
-    
-    tree[parent].append([child, weight])
-    tree[child].append([parent, weight])
-    
 
-maxSum = max(totalSum)
-maxIdx = -1
+dist = [[] for _ in range(n+1)]
 
-for i in range(1,n+1):
-    if(totalSum[i] == maxSum):
-        maxIdx = i
-        break
+for i in range(n-1):
+    p, c, weight = map(int, input().split())
+    dist[p].append([c, weight])
+    dist[c].append([p, weight])
 
-result = 0
+# 1에서 가장 먼 노드를 찾기 -> 이 부분을 parent, child가 입력될 때마다 parent까지의 합 + child의 value로 하면 틀림.
+distance = [-1] * (n+1)
+distance[1] = 0
+queue = deque([[1,0]])
 
-queue = deque()
-queue.append([i,0])
-visited = [0 for i in range(n+1)]
-visited[i] = 1
 while(queue):
-    node, value = queue.popleft()
-    for neighbor in tree[node]:
-        if(visited[neighbor[0]] == 0):
-            queue.append([neighbor[0], neighbor[1] + value])
-            visited[neighbor[0]] = 1
-            if(neighbor[1] + value > result):
-                result = neighbor[1] + value
+    node, weight = queue.popleft()
+    if(dist[node] != []):
+        for node2, weight2 in dist[node]:
+            if(distance[node2] == -1):
+                distance[node2] = weight + weight2
+                queue.append([node2, weight + weight2])
 
-print(result)
 
-#1차 시도 : root에서부터 가장 큰 가중치를 가진 leaf node를 찾아서, 다른 leaf node와의 공통 parent를 찾아 공통 부분을 제거해서 답을 구함 -> 메모리초과
-#2차 시도 : root에서부터 가장 큰 가중치를 가진 leaf node를 찾아, BFS
+#가장 먼 노드에서 가장 먼 노드 = 트리의 지름
+startNode = distance.index(max(distance))
+distance = [-1] * (n+1)
+distance[startNode] = 0
+queue = deque([[startNode, 0]])
+
+while(queue):
+    node, weight = queue.popleft()
+    if(dist[node] != []):
+        for node2, weight2 in dist[node]:
+            if(distance[node2] == -1):
+                distance[node2] = weight + weight2
+                queue.append([node2, weight + weight2])
+
+print(max(distance))
