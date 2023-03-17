@@ -1,0 +1,53 @@
+# 채워진 부분의 다음부터 보는 방식으로 백트래킹
+
+import sys,time
+input = sys.stdin.readline
+
+arr = []
+for _ in range(10):
+    arr.append(list(map(int, input().split())))
+
+ans = float("INF")
+
+currentPaper = [0,0,0,0,0,0] #현재 종이의 개수
+
+def fillPaper(y, x, cnt):
+    global ans
+    
+    if(x>=10):
+        y += 1; x = 0
+
+    if(y>=10):
+        ans = min(ans, cnt)
+        return
+    
+    if(arr[y][x] == 1):
+        for k in range(1, 6):
+            num = 0
+            if(y+k <= 10 and x+k <= 10 and currentPaper[k] < 5):
+                for ii in range(k):
+                    for jj in range(k):
+                        if(arr[y+ii][x+jj] == 1):
+                            num += 1
+                
+                if(num == k**2): # k 길이의 색종이를 넣을 수 있으면 넣기 
+                    for ii in range(k):
+                        for jj in range(k):
+                            arr[y+ii][x+jj] = 0
+                
+                    currentPaper[k] += 1
+
+                    fillPaper(y, x + k, cnt + 1)
+                    
+                    currentPaper[k] -= 1 #복구
+
+                    for ii in range(k):
+                        for jj in range(k):
+                            arr[y+ii][x+jj] = 1
+    
+    else:
+        fillPaper(y, x+1, cnt)
+            
+fillPaper(0, 0, 0)
+
+print(-1) if ans == float("INF") else print(ans)
