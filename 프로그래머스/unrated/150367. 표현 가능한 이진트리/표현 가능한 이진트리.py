@@ -30,9 +30,3 @@ def solution(numbers):
         
     
     return answer
-
-# 111
-# 0111010
-
-# 010 1 010
-# 0101010
