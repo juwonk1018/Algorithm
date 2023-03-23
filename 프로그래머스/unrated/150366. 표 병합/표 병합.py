@@ -1,8 +1,8 @@
-# 23일 10:45 ~
+# 23일 10:45 시작
 
 def solution(commands):
     size = 50
-    emptyValue = 'EMPTY'
+    emptyValue = ''
     graph = [[emptyValue] * (size+1) for _ in range(size+1)]
     
     mergeList = []
@@ -17,6 +17,7 @@ def solution(commands):
             valueLength = len(value) 
             if(valueLength == 3): # UPDATE r c value
                 r, c, string = int(value[0]), int(value[1]), value[2]
+                
                 found = False
                 for i in range(len(mergeList)): # 병합된 셀이라면 병합된 값을 바꾸기
                     if([r,c] in mergeList[i]):
@@ -59,7 +60,7 @@ def solution(commands):
                     mergeList[idx1] += [[r2, c2]]
                     if(mergeValue[idx1] == emptyValue):
                         mergeValue[idx1] = graph[r2][c2]
-                    
+                        
                 elif(idx1 != -1 and idx2 != -1): # 모두 merge
                     if(idx1 != idx2):
                         mergeList[idx1] += mergeList[idx2]
@@ -92,13 +93,13 @@ def solution(commands):
         elif(command == 'PRINT'):
             r, c = int(value[0]), int(value[1])
             
-            val = graph[r][c]
-            if(val == emptyValue):
-                val = 'EMPTY'
+            if(graph[r][c] == emptyValue):
+                value = 'EMPTY'
                 for i in range(len(mergeList)):
-                    if([r,c] in mergeList[i]):
-                        val = mergeValue[i]
-                answer.append(val)
+                    if([r,c] in mergeList[i] and mergeValue[i] != ''):
+                        value = mergeValue[i]
+                answer.append(value)
             else:
-                answer.append(val)
+                answer.append(graph[r][c])
+                
     return answer
