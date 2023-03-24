@@ -14,9 +14,6 @@ def solution(edges, target):
             pointer[num] = next_point[pointer[num]] 
             num = temp
         
-        if(target[num-1] == 0): # 0이 나오면, 종료
-            return False        
-        
         
         count[num].append(t)
         if(canMake[num] == False):
