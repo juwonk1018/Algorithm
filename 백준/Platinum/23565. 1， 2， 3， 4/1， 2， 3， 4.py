@@ -1,5 +1,3 @@
-# 4, 2, 1, 3 순으로 처리
-
 import sys
 input = sys.stdin.readline
 
@@ -89,4 +87,3 @@ for _ in range(t):
 
 
     print(ans)
-
