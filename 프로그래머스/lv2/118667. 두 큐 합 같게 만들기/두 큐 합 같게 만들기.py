@@ -8,7 +8,7 @@ def solution(queue1, queue2):
     s1, s2 = sum(queue1), sum(queue2)
     n = len(queue1) + len(queue2)
     
-    while(answer <= n+10):
+    while(answer <= n*2):
         if(s1 > s2):
             num = queue1.popleft()
             queue2.append(num)
