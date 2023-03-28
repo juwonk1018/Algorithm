@@ -1,3 +1,5 @@
+# list, deque간 변환에 시간이 많이 소모되었는데, inner에도 list가 아닌 deque를 넣음으로써 시간 문제 해결
+
 from collections import deque
 
 def solution(rc, operations):
@@ -26,8 +28,8 @@ def solution(rc, operations):
                 if(u and d):
                     u, d = d, u
                     
-            r.appendleft(r.pop())
-            l.appendleft(l.pop())
+            r.rotate(1)
+            l.rotate(1)
             
         if(operation == "Rotate"):
             if(u):
@@ -38,17 +40,22 @@ def solution(rc, operations):
             else:
                 r.appendleft(l.popleft())
                 l.append(r.pop())
-                
-    answer = []
     
-    if(u):
-        answer.append([l[0]] + list(u) + [r[0]])
-        if(inner):
-            for i in range(len(inner)):
-                answer.append([l[i+1]] + list(inner[i]) + [r[i+1]])
-        answer.append([l[R-1]] + list(d) + [r[R-1]])
-    else:
-        for i in range(R):
-            answer.append([l[i], r[i]])
+    l_list = [[num] for num in list(l)]
+    mid_list = [list(u)] + [list(inner[i]) for i in range(R-2)] + [list(d)]
+    r_list = [[num] for num in list(r)]
+    
+    answer = []
+    for left, mid, right in zip(l_list, mid_list, r_list):
+         answer.append(left + mid + right)
+#     if(u):
+#         answer.append([l[0]] + list(u) + [r[0]])
+#         if(inner):
+#             for i in range(len(inner)):
+#                 answer.append([l[i+1]] + list(inner[i]) + [r[i+1]])
+#         answer.append([l[R-1]] + list(d) + [r[R-1]])
+#     else:
+#         for i in range(R):
+#             answer.append([l[i], r[i]])
             
     return answer
