@@ -24,13 +24,8 @@ def solution(n, info):
                 maxScore = diff
                 answer = lionInfo.copy()
             elif(diff == maxScore):
-                print(answer, lionInfo)
-                for i in range(10, -1, -1):
-                    if(answer[i] < lionInfo[i]):
-                        answer = lionInfo.copy()
-                        break
-                    elif(answer [i] > lionInfo[i]):
-                        break
+                if(lionInfo[::-1] > answer[::-1]):
+                    answer = lionInfo.copy()
                         
             return 
         
