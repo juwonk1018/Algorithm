@@ -1,5 +1,5 @@
 from itertools import combinations
-from collections import defaultdict
+from collections import defaultdict, Counter
 def solution(orders, course):
     answer = []
     for c in course:
