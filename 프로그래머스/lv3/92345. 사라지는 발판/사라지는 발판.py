@@ -18,6 +18,7 @@ def solution(board, aloc, bloc):
         
         canWin = False
         canMove = False
+        winFlag = (count % 2 == 0)
         maxCount = 0; minCount = float("INF")
         
         if(count%2 == 0): # A의 움직임    
@@ -35,16 +36,6 @@ def solution(board, aloc, bloc):
                         minCount = min(minCount, result[1])
                     else:
                         maxCount = max(maxCount, result[1])
-                        
-            if(not(canMove)):
-                return [False, count]
-            
-            if(canWin): # 이길 가능성이 존재한다면
-                return [True, minCount]
-            else:
-                return [False, maxCount]
-                        
-            
             
         else: # B의 움직임
             for dx, dy in dxdy:
@@ -62,13 +53,14 @@ def solution(board, aloc, bloc):
                         canWin = True
                         minCount = min(minCount, result[1])
                         
-            if(not(canMove)):
-                return [True, count]
+        if(not(canMove)):
+            return [not(winFlag), count]
+
+        if(canWin): # 이길 가능성이 존재한다면
+            return [winFlag, minCount]
+        else:
+            return [not(winFlag), maxCount]
             
-            if(canWin):
-                return [False, minCount]
-            else:
-                return [True, maxCount]
                   
     ans = move(board, 0, aloc, bloc)
     print(ans)
