@@ -1,5 +1,6 @@
 # 해결법을 구상하다가 시간이 많이 걸림.. 너무 복잡하게 생각한 문제가 아닌가 싶음
 
+
 import sys
 input = sys.stdin.readline
 
