@@ -1,22 +1,24 @@
+from collections import defaultdict
+import heapq
 
 def solution(n, s, a, b, fares):
-    dist = [[float("INF")] * (n+1) for _ in range(n+1)]
-    for start, end, fare in fares:
-        dist[start][end] = fare
-        dist[end][start] = fare
-    
-    
+    dic = defaultdict(list)
+    for st, ed, co in fares:
+        dic[st].append((co, ed))
+        dic[ed].append((co, st))
+    ans = []
     for i in range(1, n+1):
-        dist[i][i] = 0
-        
-    for k in range(1, n+1):
-        for i in range(1, n+1):
-            for j in range(1, n+1):
-                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
-    
-    
-    answer = dist[s][a] + dist[s][b]
-    for i in range(1, n+1):
-        answer = min(answer, dist[s][i] + dist[i][a] + dist[i][b])
-        
-    return answer
+        Q = [(0, i)]
+        dp = [float('inf')] * (n+1)
+        dp[i] = 0
+        while Q:
+            co, des = heapq.heappop(Q)
+            if(dp[des] < co):
+                continue
+                
+            for cost, destination in dic[des]:
+                dp[destination] = min(cost + co, dp[destination])
+                heapq.heappush(Q, (cost + co, destination))
+        ans.append(dp[a] + dp[b] + dp[s])
+
+    return min(ans)
