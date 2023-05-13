@@ -14,7 +14,11 @@ def solution(numbers):
     for i in range(1,n+1):
         for arr in permutations(numbers, i):
             num = int(''.join(arr))
-            if(isPrime(num)):
-                answer.add(num)
-                
+            answer.add(num)
+            
+    for num in [0,1] + list(answer):
+        if(not(isPrime(num))):
+            answer -= set([num])
+            
+    print(answer)
     return len(answer)
