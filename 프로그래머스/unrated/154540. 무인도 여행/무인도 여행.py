@@ -7,21 +7,23 @@ def solution(maps):
         foodAmount = 0
         q = deque()
         
-        def changeMap(posX, posY):
+        def gainFood(posX, posY):
+            
             food = int(maps[posX][posY])
+            
             maps[posX][posY] = 'X'
             q.append([posX,posY])
             
             return food
         
-        foodAmount += changeMap(x,y)
+        foodAmount += gainFood(x,y)
         
         while(q):
             cx, cy = q.popleft()
             for i in range(4):
                 nx, ny = cx + dy[i], cy + dx[i]
                 if(0 <= nx < n and 0 <= ny < m and maps[nx][ny] != 'X'):
-                    foodAmount += changeMap(nx,ny)
+                    foodAmount += gainFood(nx,ny)
                     
         return foodAmount
         
