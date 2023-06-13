@@ -33,23 +33,21 @@ def solution(n, start, end, roads, traps):
             
         for nextVertex, time in edge[cur]:
             nextActivated = 1
-            
+            nextMask = mask
             if(nextVertex in traps):
                 if(mask & 1<<trapIndex[nextVertex]):
                     nextActivated *= -1
-
-                time *= currentActivated * nextActivated
-
-                if(time > 0 and mask & (1<<trapIndex[nextVertex])):
-                    heappush(q, [total + time, nextVertex, mask & ~(1<<trapIndex[nextVertex])])
-                elif(time > 0 and (mask & (1<<trapIndex[nextVertex])) == 0):
-                    heappush(q, [total + time, nextVertex, mask ^ (1<<trapIndex[nextVertex])])
+                
+                if(mask & (1<<trapIndex[nextVertex])):
+                    nextMask = nextMask & ~(1<<trapIndex[nextVertex])
+                else:
+                    nextMask = nextMask ^ (1<<trapIndex[nextVertex])
             
-            else:
-                time *= currentActivated * nextActivated
+            
+            time *= currentActivated * nextActivated
 
-                if(time > 0):
-                    heappush(q, [total + time, nextVertex, mask])
+            if(time > 0):
+                heappush(q, [total + time, nextVertex, nextMask])
             
                     
     
