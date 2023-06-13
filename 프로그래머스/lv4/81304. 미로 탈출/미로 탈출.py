@@ -2,56 +2,55 @@ from heapq import heappush, heappop
 
 def solution(n, start, end, roads, traps):
     
-    def dijkstra(roadCost, s, e, totalTime, trapCount):
-        nonlocal answer
-        
-        
-        if(s==e):
-            answer = 0
-            return
-        
-        distance = [float("INF")] * (n+1)
-        
-        q = [[s, totalTime]]
-        
-        while(q):
-            cur, curTime = heappop(q)
-            
-            if(distance[cur] < curTime or (cur != s and cur in traps)):
-                continue
-                
-            for dest, time in roadCost[cur]:
-                if(distance[dest] > curTime + time):
-                    distance[dest] = curTime + time
-                    heappush(q, [dest, curTime + time])
-
-        
-            
-        if(distance[e] != float("INF")):
-            answer = min(answer, distance[e])
-        
-        for idx, trap in enumerate(traps):
-            if(distance[trap] < answer and trapCount[idx] < 2): # Trap을 밟음
-                trapCountCopy = trapCount + []
-                trapCountCopy[idx] += 1
-
-                trapRoadCost = [[] for _ in range(n+1)]
-                for i in range(len(roadCost)):
-                    for j in range(len(roadCost[i])):
-                        dest, time = roadCost[i][j]
-                        if(i == trap or dest == trap):
-                            trapRoadCost[dest].append([i, time])
-                        else:
-                            trapRoadCost[i].append([dest, time])
-
-                dijkstra(trapRoadCost, trap, e, distance[trap], trapCountCopy)
-
     answer = 1000000000
-    roadCost = [[] for _ in range(n+1)]
+    
+    edge = [[] for _ in range(n+1)]
+    dist = {}
+    
+    trapIndex = {trap : n for n, trap in enumerate(traps)}
     
     for s, d, time in roads:
-        roadCost[s].append([d,time])
+        edge[s].append([d,time])
+        edge[d].append([s,-time])
+    
+    q = [[0, start, 0]] # [distance, vertex, bitmask]
+    
+    while(q):
         
-    dijkstra(roadCost, start, end, 0, [0] * len(traps))
+        total, cur, mask = heappop(q)
+        if(dist.get((cur, mask))): # 이미 존재한다면, 최선의 거리이므로 SKIP.
+            continue
+        
+        if(cur == end):
+            answer = total
+            break
+            
+        dist[(cur, mask)] = total
+        
+        currentActivated = 1
+        if(cur in traps and mask & (1 << trapIndex[cur])):
+            currentActivated *= -1
+            
+        for nextVertex, time in edge[cur]:
+            nextActivated = 1
+            
+            if(nextVertex in traps):
+                if(mask & 1<<trapIndex[nextVertex]):
+                    nextActivated *= -1
+
+                time *= currentActivated * nextActivated
+
+                if(time > 0 and mask & (1<<trapIndex[nextVertex])):
+                    heappush(q, [total + time, nextVertex, mask & ~(1<<trapIndex[nextVertex])])
+                elif(time > 0 and (mask & (1<<trapIndex[nextVertex])) == 0):
+                    heappush(q, [total + time, nextVertex, mask ^ (1<<trapIndex[nextVertex])])
+            
+            else:
+                time *= currentActivated * nextActivated
+
+                if(time > 0):
+                    heappush(q, [total + time, nextVertex, mask])
+            
+                    
     
     return answer
