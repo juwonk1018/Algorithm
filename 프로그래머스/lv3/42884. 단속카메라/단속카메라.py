@@ -4,7 +4,7 @@ def solution(routes):
     startPoint, endPoint = -30001, -30001
     answer = 0
     for start, end in routes:
-        if(startPoint <= start <= endPoint):
+        if(start <= endPoint):
             startPoint = start
             endPoint = min(endPoint, end)
         else:
