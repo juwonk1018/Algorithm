@@ -5,9 +5,8 @@ def solution(x, y, n):
     while(y not in result):
         nextResult = set()
         for num in result:
-            nextResult.add(num + n)
-            nextResult.add(num * 2)
-            nextResult.add(num * 3)
+            for nextNumber in [num + n, num * 2, num * 3]:
+                nextResult.add(nextNumber)
         result = nextResult
         
         if(min(result) > y):
