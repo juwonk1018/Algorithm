@@ -1,7 +1,8 @@
+import dis
 from collections import deque
+    
 def solution(bridge_length, weight, truck_weights):
     n = len(truck_weights)
-    
     bridge = deque([0] * bridge_length)
     bridgeWeight = 0
     cur = 0
@@ -21,5 +22,6 @@ def solution(bridge_length, weight, truck_weights):
     while(bridgeWeight):
         bridgeWeight -= bridge.pop()
         answer += 1
-        
+    
     return answer
+    
