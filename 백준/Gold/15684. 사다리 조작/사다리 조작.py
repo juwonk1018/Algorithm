@@ -5,16 +5,15 @@ n, m, h = map(int, input().split())
 
 def checkLadder():
     for i in range(1, n+1):
-        cur = [1,i]
+        cur = i
 
-        while(cur[0] <= h):
-            if(ladderPosition[cur[0]][cur[1]]):
-                cur = [cur[0] + 1, cur[1] + 1]
-            elif(cur[1] > 0 and ladderPosition[cur[0]][cur[1]-1]):
-                cur = [cur[0] + 1, cur[1] - 1]
-            else:
-                cur = [cur[0] + 1, cur[1]]
-        if(cur[1] != i):
+        for height in range(1, h+1):
+            if(ladderPosition[height][cur]):
+                cur += 1
+            elif(cur > 0 and ladderPosition[height][cur-1]):
+                cur -= 1
+
+        if(cur != i):
             return False
     
     return True
@@ -43,6 +42,9 @@ for _ in range(m):
     a, b = map(int, input().split())
     ladderPosition[a][b] = 1
 
-putLadder(0)
+if(m==0):
+    answer = 0
+else:
+    putLadder(0)
 
 print(answer if answer != float("INF") else -1)
