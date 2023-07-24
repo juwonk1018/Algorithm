@@ -20,16 +20,16 @@ def checkLadder():
     return True
 
 def putLadder(num):
-    global answer
-
+    
     if(checkLadder()):
+        global answer
         answer = min(answer, num)
         return
  
     if(num <= min(2, answer)): # -> 이 조건을 line 32의 맨 뒤에 추가해서 num == 3일 때에도 n*(h+1) cycle을 돌아서 느렸던 것.
         for i in range(1, n):
             for j in range(1, h+1):
-                if(ladderPosition[j][i] == 0 and ladderPosition[j][i-1] == 0):
+                if(ladderPosition[j][i] == 0 and ladderPosition[j][i-1] == 0 and ladderPosition[j][i+1] == 0):
                     ladderPosition[j][i] = 1
 
                     putLadder(num + 1)
