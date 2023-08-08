@@ -30,19 +30,16 @@ def checkCycle(pairs):
         sx, sy = w
         
         while(True):
-            nx = float("INF")
+            
             for i in range(n):
                 if(cy == wormholePosition[i][1] and wormholePosition[i][0] > cx):
-                    nx = min(nx, wormholePosition[i][0])
-
-            if(nx != float("INF")):
-                cx = nx
-                
+                    cx = wormholePosition[i][0]
+                    break
             else:
                 break
 
             cx, cy = wormhole[(cx,cy)]
-            
+
             if(cx == sx and cy == sy):
                 ans += 1
                 return
