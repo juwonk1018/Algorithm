@@ -5,17 +5,16 @@ def makePairs(cur, paired):
 
     global ans
 
-    if(len(cur) == n//2):
+    if(len(cur) == n//2): #짝이 모두 완성
         checkCycle(cur)
         return
 
     for i in range(n):
-        if(i not in paired):
+        if(i not in paired): # 짝이 지어지지 않으면, 짝을 만들고 중복을 제거하기 위해 break
             for j in range(i+1, n):
                 if(j not in paired):
                     makePairs(cur + [[i, j]], paired + [i, j])
             break
-
 
 def checkCycle(pairs):
     global ans
@@ -28,30 +27,27 @@ def checkCycle(pairs):
 
     for w in wormhole.keys():
         cx, cy = w
-        cnt = 0
+        sx, sy = w
         
         while(True):
-            cx, cy = wormhole[(cx,cy)]
-            cnt += 1
-            if(cnt >= 2 * n):
-                ans += 1
-                return
-
             nx = float("INF")
             for i in range(n):
                 if(cy == wormholePosition[i][1] and wormholePosition[i][0] > cx):
                     nx = min(nx, wormholePosition[i][0])
 
             if(nx != float("INF")):
-                cnt += 1
-                if(cnt >= 2 * n):
-                    ans += 1
-                    return
-                else:
-                    cx = nx
+                cx = nx
                 
             else:
                 break
+
+            cx, cy = wormhole[(cx,cy)]
+            
+            if(cx == sx and cy == sy):
+                ans += 1
+                return
+
+            
                     
         
 
@@ -63,6 +59,7 @@ for _ in range(n):
     x, y = map(int, input().split())
     wormholePosition.append((x,y))
     
+wormholePosition.sort(key = lambda x : (x[1], x[0]))
 ans = 0
 makePairs([], [])
 
