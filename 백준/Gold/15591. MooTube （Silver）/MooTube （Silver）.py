@@ -1,7 +1,6 @@
 # 플로이드-워셜 = 시간초과
 # 미리 정점간의 거리를 계산하는 것은 O(n * (V + E))로 시간 초과가 발생.
-# O(V + E)는 모든 edges를 탐색하면서 모든 vertexs가 queue에 들어가기 때문에 O(V+E) 
-# 하지만, 각 질문마다 k를 넘는지 확인하는 작업은 모든 edge를 
+# O(V + E)는 모든 edges를 탐색하면서 모든 vertexs가 queue에 들어가기 때문에 O(V+E)
 
 import sys
 from collections import deque
