@@ -1,5 +1,7 @@
 import sys, heapq
 
+input = sys.stdin.readline
+
 n, m = map(int, input().split())
 
 costs = [[] for _ in range(n+1)]
