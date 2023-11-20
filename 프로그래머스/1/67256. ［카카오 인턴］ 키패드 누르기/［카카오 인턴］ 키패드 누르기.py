@@ -11,7 +11,7 @@ def solution(numbers, hand):
             leftThumb = [leftNumber.index(number), 0]
             answer += 'L'
         elif(number in rightNumber):
-            rightThumb = [rightNumber.index(number), 0]
+            rightThumb = [rightNumber.index(number), 2]
             answer += 'R'
         else:
             numberPosition = [midNumber.index(number), 1]
