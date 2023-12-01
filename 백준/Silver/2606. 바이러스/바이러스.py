@@ -1,7 +1,9 @@
-from collections import defaultdict, deque
+from collections import deque
+
 n = int(input())
 m = int(input())
-pair = defaultdict(list)
+
+pair = [[] for _ in range(n+1)]
 
 for _ in range(m):
     a, b = map(int, input().split())
@@ -10,6 +12,7 @@ for _ in range(m):
 
 path = set()
 now = deque([1])
+
 while(now):
     cur = now.popleft()
     for a in pair[cur]:
