@@ -9,8 +9,6 @@ for _ in range(n):
     cur = lst[0]
     medal[cur] = lst[1:]
 
-k_medal = medal[k]
-
 ans = 1
 
 def compareMedal(firstMedal, secondMedal):
@@ -30,6 +28,7 @@ def compareMedal(firstMedal, secondMedal):
         
 
 for i in range(1, n+1):
-    ans += compareMedal(medal[k], medal[i])
+    if(i != k):
+        ans += compareMedal(medal[i], medal[k])
 
 print(ans)
