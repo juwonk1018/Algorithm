@@ -1,5 +1,7 @@
 # 처음에는 배열에서 순서대로 접근해서 비교해 union 편입 -> 예제 4번처럼 역순으로 거슬러 올라가는 경우 탐지 X
 
+# 시간 감소 -> 매회마다 모든 배열을 탐색하는 것이 아니라, 이전에 추가된 원소만 탐색
+
 
 from collections import deque
 import sys
@@ -35,27 +37,32 @@ def BFS(i, j, visited, countries):
     
     result = total//len(union)
     for i, j in union:
+        dq.append([i,j])
         countries[i][j] = result
                 
+
+dq = deque([[i,j] for i in range(n) for j in range(n)])
 
 while(True):
     migration = False
     visited = [[False] * n for _ in range(n)]
-    nextCountries = [countries[i][:] for i in range(n)]
 
-    for i in range(n):
-        for j in range(n):
-            if(visited[i][j] == False):
-                for k in range(2):
-                    ni = i+dx[k]
-                    nj = j+dy[k]
-                    if(0 <= ni < n and 0 <= nj < n and l <= abs(countries[ni][nj] - countries[i][j]) <= r and visited[ni][nj] == False):
-                        BFS(i, j, visited, nextCountries)
-                        migration = True
+    for _ in range(len(dq)):
+        i, j = dq.popleft()
+        if(visited[i][j] == True):
+            continue
+
+        for k in range(4):
+            ni = i+dx[k]
+            nj = j+dy[k]
+            if(0 <= ni < n and 0 <= nj < n and l <= abs(countries[ni][nj] - countries[i][j]) <= r and visited[ni][nj] == False):
+                BFS(i, j, visited, countries)
+                migration = True
+                break
+    
     
     if(migration == False):
         print(ans)
         break
 
-    countries = [nextCountries[i] for i in range(n)]
     ans += 1
