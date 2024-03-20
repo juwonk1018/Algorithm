@@ -20,7 +20,7 @@ def solution(files):
         tail = file[endIdx+1:]
         partedFile.append([head, number, tail, idx])
                 
-    partedFile.sort(key=lambda x:[x[0].lower(),int(x[1]), idx])
+    partedFile.sort(key=lambda x:[x[0].lower(),int(x[1])])
     
     for h, n, t, idx in partedFile:
         answer.append(h+n+t)
