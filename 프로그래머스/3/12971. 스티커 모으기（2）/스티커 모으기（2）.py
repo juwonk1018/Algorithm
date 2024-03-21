@@ -4,7 +4,7 @@ def solution(sticker):
     
     for i in range(1, n):
         if(i==1):
-            dp[i] = [0, sticker[i]]
+            dp[i] = [sticker[0], sticker[i]]
         elif(i==2):
             dp[i] = [dp[0][0] + sticker[i], dp[0][1] + sticker[i]]
         elif(i != n-1):
