@@ -3,7 +3,7 @@ from collections import deque
 def solution(n, wires):
     def search(idx):
         visited = [0] * (n+1)
-        visited[idx] = 1
+        visited[idx] = 1 # 이 부분이 없으면 끊겨서 혼자만 남은 부분의 크기가 0이 된다.
         
         q = deque([idx])
         while(q):
