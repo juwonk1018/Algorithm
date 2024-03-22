@@ -1,4 +1,5 @@
 from collections import defaultdict
+from itertools import product
 def solution(user_id, banned_id):
     matched_id = defaultdict(set)
     for uid in user_id:
@@ -11,7 +12,6 @@ def solution(user_id, banned_id):
                         
                 if(matched):
                     matched_id[bid].add(uid)
-    
     
     bannedList = []
     
