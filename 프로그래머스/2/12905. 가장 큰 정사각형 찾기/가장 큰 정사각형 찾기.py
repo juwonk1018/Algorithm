@@ -1,4 +1,14 @@
 def solution(board):
+    
+    
+    # for i in range(1, len(b)) :
+    #     for j in range(1, len(b[0])):
+    #         if b[i][j] >= 1 :
+    #             b[i][j] += min(b[i-1][j-1],b[i][j-1],b[i-1][j])
+                
+    
+                
+                
     n, m = len(board), len(board[0])
          
     l, r = 0, min(n,m)
@@ -10,7 +20,6 @@ def solution(board):
                 
     
     while(l<=r):
-        print(l,r)
         mid = (l+r)//2
         
         isSquare = False
