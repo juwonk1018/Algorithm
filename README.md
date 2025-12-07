@@ -1,2 +1,3 @@
-# BOJ :sparkles:
-> https://solved.ac/profile/aju540
+### BackJoon Online Judge
+
+https://solved.ac/profile/aju540
